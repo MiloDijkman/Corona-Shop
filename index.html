@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Duurzaam Huis</title>
+<!-- Style Sheets -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/nav.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Javascript -->
+<script type="text/javascript" scr="Javascript/duurzaamhuis.js"></script>
+<script src="https://kit.fontawesome.com/aff788566f.js" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="css/switch.css">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script src="Javascript/uitgaven.js"></script>
+<link rel="stylesheet" href="css/uitgaven.css">
+</head>
+
+<body>
+  <video autoplay muted loop id="myVideo" data-aos-delay="2000" data-aos="fade-up">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <div class="flip-card navimage" id="navimage" data-aos="zoom-in-up" data-aos-delay="2100">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img src="css/Finishe dLogo.png" alt="Avatar" style="width:300px;height:300px;">
+      </div>
+      <div class="flip-card-back">
+        <img src="css/ATM.png" alt="Avatar" style="width:300px;height:300px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="loader_bg" id="loading">
+    <div class="loader"></div>
+  </div>
+
+  <div id="top-columns">
+    <div class="item Water" data-aos="zoom-in-up" data-aos-delay="2000">
+      <div class="hoveritem">
+        <i class="fas fa-tint iconblock"></i>
+        <ul class="listitemclass">
+           <li class="titelblock">Water Verbruik</li>
+           <li class="smalldescriptionblock">De totale water gebruik in uw huis</li>
+           <li class="priceblock">$ 1.750</li>
+           <li class="exbtwblock">Ex. BTW</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="item Gas" data-aos="zoom-in-up" data-aos-delay="2100">
+      <div class="hoveritem">
+        <i class="fas fa-gas-pump iconblock"></i>
+        <ul class="listitemclass">
+          <li class="titelblock">Gas Verbruik</li>
+          <li class="smalldescriptionblock">De totale Gas gebruik in uw huis</li>
+          <li class="priceblock">$ 740</li>
+          <li class="exbtwblock">Ex. BTW</li>
+       </ul>
+      </div>
+    </div>
+    <div class="item Electriciteit" data-aos="zoom-in-up" data-aos-delay="2200">
+      <div class="hoveritem">
+        <i class="fas fa-lightbulb iconblock"></i>
+        <ul class="listitemclass">
+          <li class="titelblock">Electriciteit</li>
+          <li class="smalldescriptionblock">De totale Electriciteit gebruik in uw huis</li>
+          <li class="priceblock">$ 1.750</li>
+          <li class="exbtwblock">Ex. BTW</li>
+       </ul>
+      </div>
+    </div>
+    <div class="item Aantal" data-aos="zoom-in-up" data-aos-delay="2300">
+      <div class="hoveritem">
+        <div id="Donutchart">
+          <div class="Tekst-donutchart">
+              <h1 class="headlinechart">Temperatuur</h1>
+              <p class="yeet"> De Gemiddelde Temperatuur in Huis</p>
+          </div>
+          <div class="Donut-chart">
+              <svg width="60%" height="60%" viewbox=" 0 0 42 42" class="chartbitch">
+                  <circle cx="21"  cy="21" r="15.91549430918954" fill="transparent" stroke="#A5F7A1"
+                  stroke-width="2"></circle>
+                  <circle cx="21"  cy="21" r="15.91549430918954" fill="transparent" 
+                  stroke="#2EF4F6"stroke-width="2" stroke-dasharray="75 25" 
+                  stroke-dashoffset="75" id="cirkelBoog"></circle>
+                  <g class="temp">
+                      <text id="temperatuur" x="30%" y="54%">19</text>
+                      <text id="eenheid" x="52%" y="50%" >&deg;C</text>
+                  </g>
+              </svg>
+          </div>
+          <input type="range" min="1" max="30" step="1" value="18" id="thermostaat">
+          <script>
+
+            let temperatuur = 5;
+            const temperatuurUitvoer = document.getElementById('temperatuur');
+            const cirkelBoog = document.getElementById('cirkelBoog');
+            const thermostaat = document.getElementById('thermostaat');
+    
+            //temperatuur = thermostaat.value;
+    
+             const uitvoeren = (temp) => {
+                temperatuurUitvoer.innerHTML = temp;
+                let boog = temp * 100/31;
+                cirkelBoog.style.strokeDasharray = `${boog} ${100 - boog}`;
+            }
+            const animeerUitvoer = (temp) => {
+                let t = 0;
+                const timer = setInterval( () => {
+                    if( t <= temp) {
+                        uitvoeren(t);
+                        t++;
+                    } else {
+                        clearInterval(timer);
+                    }
+                }, 25)
+            }
+    
+            animeerUitvoer(thermostaat.value);
+            
+    
+            thermostaat.addEventListener('change', () => {
+                animeerUitvoer(thermostaat.value);
+            });
+            
+        </script>
+        </div>
+      </div>
+    </div>
+    <div class="item itemlong Verbruikt" data-aos="zoom-in-up" id="hiddenstart">
+      <div class="">
+        <div class="container containerspecial">
+          <!-- SECTION WOONKAMER -->
+          <section class="column boven woonkamer">
+              <h3>Woonkamer</h3>
+  
+              <!-- LAMPEN SWITCH-->
+              <p>Lamp</p>
+              <label class="switch switch-woonkamer">
+                  <input type="checkbox" class="checkbox-woon">
+                  <span class="slider slider-woon"></span>
+              </label>
+              
+              <!-- STEREO SWITCH-->
+              <p>Stereo</p>
+              <label class="switch switch-woonkamer">
+                  <input type="checkbox" class="checkbox-woon">
+                  <span class="slider slider-woon"></span>
+              </label>
+  
+              <!-- TELEVISIE SWITCH-->
+              <p>Televisie</p>
+              <label class="switch switch-woonkamer">
+                  <input type="checkbox" class="checkbox-woon">
+                  <span class="slider slider-woon"></span>
+              </label>
+  
+              <!-- AQUARIUM LAMPEN SWITCH-->
+              <p>Aquarium Lampen</p>
+              <label class="switch switch-woonkamer">
+                  <input type="checkbox" class="checkbox-woon">
+                  <span class="slider slider-woon"></span>
+              </label>
+          </section>
+          <!-- END SECTION WOONKAMER-->
+  
+          <!-- SECTION KEUKEN -->
+          <section class="column boven keuken">
+              <h3>Keuken</h3>
+  
+              <!-- KEUKEN LAMP-->
+              <p> keuken Lamp</p>
+              <label class="switch switch-keuken">
+                  <input type="checkbox" class="checkbox-keuken">
+                  <span class="slider slider-keuken"></span>
+              </label>
+              
+              <!--KOFFIEZET APPARAAT -->
+              <p>Koffiezet Apperaat</p>
+              <label class="switch switch-keuken">
+                  <input type="checkbox" class="checkbox-keuken">
+                  <span class="slider slider-keuken"></span>
+              </label>
+  
+              <!-- OVEN -->
+              <p>Oven</p>
+              <label class="switch switch-keuken">
+                  <input type="checkbox" class="checkbox-keuken">
+                  <span class="slider slider-keuken"></span>
+              </label>
+  
+              <!-- VAAT WASSER -->
+              <p>Vaatwasser</p>
+              <label class="switch switch-keuken">
+                  <input type="checkbox" class="checkbox-keuken">
+                  <span class="slider slider-keuken"></span>
+              </label>
+              
+              <!-- WATERKOKER -->
+              <p>Waterkoker</p>
+              <label class="switch switch-keuken">
+                  <input type="checkbox" class="checkbox-keuken">
+                  <span class="slider slider-keuken"></span>
+              </label>
+              
+          </section>
+          <!-- END SECTION KEUKEN-->
+  
+          <!-- SECTION BADKAMER -->
+          <section class="column down badkamer">
+              <h3>Badkamer</h3>
+  
+              <!--  -->
+              <p>Lampen</p>
+              <label class="switch switch-bad">
+                  <input type="checkbox" class="checkbox-bad">
+                  <span class="slider slider-bad"></span>
+              </label>
+  
+              <!--  -->
+              <p>Lampen</p>
+              <label class="switch switch-bad">
+                  <input type="checkbox" class="checkbox-bad">
+                  <span class="slider slider-bad"></span>
+              </label>
+  
+              <!--  -->
+              <p>Lampen</p>
+              <label class="switch switch-bad">
+                  <input type="checkbox" class="checkbox-bad">
+                  <span class="slider slider-bad"></span>
+              </label>
+  
+              <!--  -->
+              <p>Lampen</p>
+              <label class="switch switch-bad">
+                  <input type="checkbox" class="checkbox-bad">
+                  <span class="slider slider-bad"></span>
+              </label>
+          </section>
+          <!-- END SECTION BADKAMER -->
+  
+          <!-- SECTION SLAAPKAMER -->
+          <section class=" column down slaapkamer">
+              <h3>Slaapkamer</h3>
+  
+              <!--  -->
+              <p>Lamp</p>
+              <label class="switch switch-slaap">
+                  <input type="checkbox" class="checkbox-slaap">
+                  <span class="slider slider-slaap"></span>
+              </label>
+  
+             <!--  -->
+             <p>Lamp</p>
+             <label class="switch switch-slaap">
+                 <input type="checkbox" class="checkbox-slaap">
+                 <span class="slider slider-slaap"></span>
+             </label>
+  
+             <!--  -->
+             <p>Lamp</p>
+             <label class="switch switch-slaap">
+                 <input type="checkbox" class="checkbox-slaap">
+                 <span class="slider slider-slaap"></span>
+             </label>
+  
+             <!--  -->
+             <p>Lamp</p>
+             <label class="switch switch-slaap">
+                 <input type="checkbox" class="checkbox-slaap">
+                 <span class="slider slider-slaap"></span>
+             </label> 
+          </section>
+          <!-- END SECTION SLAAPKAMER -->
+      </div>
+      </div>
+    </div>
+    
+    <div class="Uitgaven itemlong" data-aos="zoom-in-up" id="hiddenstart2">
+      <div class="">
+        <div id="grafiek">
+          <p>Totaalverbruik</p>
+        </div>
+        <div id="grafiek1">
+          <p>Gas</p>
+      </div>
+      <div id="henk">
+          <p>Stroom verbruik</p>
+      </div>
+      <div id="jolanda">
+          <p>Stroom verbruik</p>
+      </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  AOS.init();
+
+  document.getElementById("hiddenstart2").style.visibility = "hidden";
+  document.getElementById("hiddenstart").style.visibility = "hidden";
+  document.getElementById("navimage").style.position = "absolute";
+  var myobj = document.getElementById("loading");
+  setTimeout(() => {  myobj.remove();  }, 1950);
+  setTimeout(() => {  document.getElementById("navimage").style.position = "relative";  }, 1950);
+  setTimeout(() => {  document.getElementById("hiddenstart").style.visibility = "visible";  }, 2400);
+  setTimeout(() => {  document.getElementById("hiddenstart2").style.visibility = "visible";  }, 2500);
+
+  
+</script>
+<script src="scripts/grafiek.js"></script>
+<script src="scripts/grafiek2.js"></script>
+<script src="scripts/grafiek3.js"></script>
+
+</html>
